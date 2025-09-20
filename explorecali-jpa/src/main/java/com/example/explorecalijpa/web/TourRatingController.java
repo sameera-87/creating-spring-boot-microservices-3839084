@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.explorecalijpa.business.TourRatingService;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 /**
  * Tour Rating Controller
@@ -47,5 +50,13 @@ public class TourRatingController {
   public String return404(NoSuchElementException exception) {
     return exception.getMessage();
   }
+
+  @GetMapping("path")
+  public List<RatingDto> getAllRatingsForTour(@RequestParam String param) {
+      List<TourRating> tourRatings = tourRatingService.lookupRatings(tourId);
+      return tourRatings.stream().map(RatingDto::new).toList();
+      
+  }
+  
 
 }
